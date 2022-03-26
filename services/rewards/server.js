@@ -29,7 +29,7 @@ db.sequelize
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'recipe book service is OK !',
+    message: 'reward service is OK !',
     version: packagejson.version,
   })
 })
