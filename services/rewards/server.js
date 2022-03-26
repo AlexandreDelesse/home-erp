@@ -4,7 +4,6 @@ const cors = require('cors')
 const dbConfig = require('./config/db.config')
 const packagejson = require('./package.json')
 
-
 const app = express()
 
 const corsOption = {
@@ -35,8 +34,8 @@ app.get('/', (req, res) => {
   })
 })
 
-require('./src/routes/recipe.routes')(app)
-require('./src/routes/reward.routes')(app)
+// require('./src/routes/recipe.routes')(app)
+require('./src/routes/reward.route')(app)
 
 const port = process.env.PORT || 5001
 
