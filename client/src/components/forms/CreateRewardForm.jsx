@@ -1,52 +1,61 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { Input, Button } from "reactstrap";
 
 function CreateRewardForm(props) {
-  const { onSubmit } = props
+  const { onSubmit } = props;
 
   const [reward, setReward] = useState({
-    rewardName: '',
-    rewardCondition: '',
+    rewardName: "",
+    rewardCondition: "",
     rewardPoints: 0,
-  })
+  });
 
   const handleOnFormChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setReward((old) => {
-      return { ...old, [name]: value }
-    })
-  }
+      return { ...old, [name]: value };
+    });
+  };
 
   const handleOnSubmit = () => {
-    onSubmit(reward)
-  }
+    onSubmit(reward);
+  };
 
   return (
     <>
-      <input
+      <Input
         type="text"
         name="rewardName"
         value={reward.rewardName}
         onChange={handleOnFormChange}
+        placeholder="Nom de la recompense"
+        className="m-2"
       />
-      <input
+      <Input
         type="text"
         name="rewardCondition"
         value={reward.rewardCondition}
         onChange={handleOnFormChange}
+        placeholder="Condition"
+        className="m-2"
       />
-      <input
+      <Input
         type="text"
         name="rewardPoints"
         value={reward.rewardPoints}
         onChange={handleOnFormChange}
+        placeholder="Points"
+        className="m-2"
       />
-      <button onClick={handleOnSubmit}>Ajouter</button>
+      <Button onClick={handleOnSubmit} className="m-2">
+        Ajouter
+      </Button>
     </>
-  )
+  );
 }
 
-CreateRewardForm.propTypes = { onSubmit: PropTypes.func }
-CreateRewardForm.defaultProps = { onSubmit: () => {} }
+CreateRewardForm.propTypes = { onSubmit: PropTypes.func };
+CreateRewardForm.defaultProps = { onSubmit: () => {} };
 
-export default CreateRewardForm
+export default CreateRewardForm;
