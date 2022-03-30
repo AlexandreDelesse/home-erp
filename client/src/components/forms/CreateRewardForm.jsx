@@ -11,6 +11,16 @@ function CreateRewardForm(props) {
     rewardPoints: 0,
   });
 
+  const resetForm = () => {
+    setReward({ rewardName: "", rewardCondition: "", rewardPoints: 0 });
+  };
+
+  const checkForm = () => {
+    return (
+      !reward.rewardCondition || !reward.rewardName || reward.rewardPoints === 0
+    );
+  };
+
   const handleOnFormChange = (e) => {
     const { name, value } = e.target;
     setReward((old) => {
@@ -19,7 +29,12 @@ function CreateRewardForm(props) {
   };
 
   const handleOnSubmit = () => {
-    onSubmit(reward);
+    if (!checkForm()) {
+      onSubmit(reward);
+      resetForm();
+    } else {
+      return;
+    }
   };
 
   return (

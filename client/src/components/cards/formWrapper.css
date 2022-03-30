@@ -1,7 +1,6 @@
 .formWrapper {
   display: flex;
   flex-direction: column;
-  background-color: #f0ebe1;
   padding: 10px;
   border-radius: 10px;
   width: 300px;
