@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Input, Button } from "reactstrap";
 
@@ -6,19 +6,23 @@ function CreateRewardForm(props) {
   const { onSubmit } = props;
 
   const [reward, setReward] = useState({
-    rewardName: "",
-    rewardCondition: "",
-    rewardPoints: 0,
+    condition: "",
+    points: 0,
+    category: "",
+    subCategory: "",
   });
 
   const resetForm = () => {
-    setReward({ rewardName: "", rewardCondition: "", rewardPoints: 0 });
+    setReward({
+      condition: "",
+      points: 0,
+      category: "",
+      subCategory: "",
+    });
   };
 
   const checkForm = () => {
-    return (
-      !reward.rewardCondition || !reward.rewardName || reward.rewardPoints === 0
-    );
+    return !reward.condition || reward.points === 0;
   };
 
   const handleOnFormChange = (e) => {
@@ -37,32 +41,45 @@ function CreateRewardForm(props) {
     }
   };
 
+  const handleOnCategoryChange = (categories) => {
+    setReward((old) => ({ ...old, categories }));
+  };
+
   return (
     <>
       <Input
         type="text"
-        name="rewardName"
-        value={reward.rewardName}
-        onChange={handleOnFormChange}
-        placeholder="Nom de la recompense"
-        className="m-2"
-      />
-      <Input
-        type="text"
-        name="rewardCondition"
-        value={reward.rewardCondition}
+        name="condition"
+        value={reward.condition}
         onChange={handleOnFormChange}
         placeholder="Condition"
         className="m-2"
       />
       <Input
         type="text"
-        name="rewardPoints"
-        value={reward.rewardPoints}
+        name="points"
+        value={reward.points}
         onChange={handleOnFormChange}
         placeholder="Points"
         className="m-2"
       />
+      <Input
+        type="text"
+        name="category"
+        value={reward.category}
+        onChange={handleOnFormChange}
+        placeholder="categorie"
+        className="m-2"
+      />
+      <Input
+        type="text"
+        name="subCategory"
+        value={reward.subCategory}
+        onChange={handleOnFormChange}
+        placeholder="sous categorie"
+        className="m-2"
+      />
+
       <Button onClick={handleOnSubmit} className="m-2">
         Ajouter
       </Button>

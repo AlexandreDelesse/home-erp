@@ -1,15 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const reward = sequelize.define("reward", {
-    rewardId: {
-      type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4,
-      allowNull: false,
-      primaryKey: true,
-    },
-    rewardName: { type: Sequelize.STRING },
-    rewardCondition: { type: Sequelize.STRING },
-    rewardPoints: { type: Sequelize.INTEGER },
-    rewardStatus: { type: Sequelize.BOOLEAN, defaultValue: false },
+    condition: { type: Sequelize.STRING },
+    points: { type: Sequelize.INTEGER, defaultValue: 0 },
+    status: { type: Sequelize.BOOLEAN, defaultValue: false },
+    category: { type: Sequelize.STRING, defaultValue: "" },
+    subCategory: { type: Sequelize.STRING, defaultValue: "" },
   });
   return reward;
 };

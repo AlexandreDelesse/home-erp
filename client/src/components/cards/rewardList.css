@@ -1,6 +1,17 @@
 .rewardList {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 200px);
+  grid-template-columns: repeat(auto-fill, 300px);
   gap: 10px;
+}
+
+.rewardCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rewardBody {
+  display: flex;
+  justify-content: space-between;
 }

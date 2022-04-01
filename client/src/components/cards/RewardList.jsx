@@ -1,14 +1,19 @@
 import React from "react";
-import { Card, CardBody, CardTitle, CardText, CardHeader } from "reactstrap";
+import { Card, CardBody, CardTitle, Button, CardHeader } from "reactstrap";
 import { GrClose } from "react-icons/gr";
 import { HiFlag } from "react-icons/hi";
 import "./rewardList.css";
 
-function RewardList({ rewards, onDelete }) {
+function RewardList({ rewards, onDelete, onClaim }) {
   return (
     <div className="rewardList">
       {rewards.map((reward) => (
-        <RewardCard key={reward.rewardId} reward={reward} onDelete={onDelete} />
+        <RewardCard
+          key={reward.id}
+          reward={reward}
+          onDelete={onDelete}
+          onClaim={onClaim}
+        />
       ))}
     </div>
   );
@@ -18,27 +23,35 @@ RewardList.propTypes = {};
 
 export default RewardList;
 
-function RewardCard({ reward, onDelete }) {
+function RewardCard({ reward, onDelete, onClaim }) {
   const handleOnDelete = () => {
-    onDelete(reward.rewardId);
+    onDelete(reward.id);
+  };
+
+  const handleOnClaim = () => {
+    onClaim({ id: reward.id, reward: { status: true } });
   };
 
   return (
     <Card className="rewardCardWrapper">
-      <CardHeader>
-        <GrClose
-          className="icon closeIcon"
-          onClick={handleOnDelete}
-          size="10px"
-        />
-        <CardTitle tag="h5">{reward.rewardName || "no name"}</CardTitle>
+      <CardHeader
+        className={`rewardCardHeader ${reward.status ? "bg-success" : null}`}
+      >
+        <CardTitle tag="h5">{reward.condition || "no name"}</CardTitle>
+        <GrClose className="icon" onClick={handleOnDelete} size="12px" />
       </CardHeader>
-      <CardBody>
-        <CardText>{reward.rewardCondition || "no description"}</CardText>
+      <CardBody className="rewardBody">
         <div>
           <HiFlag />
-          {reward.rewardPoints || 0}
+          {reward.points || 0}
         </div>
+        <Button
+          onClick={handleOnClaim}
+          color="primary"
+          disabled={reward.status}
+        >
+          Claim
+        </Button>
       </CardBody>
     </Card>
   );
