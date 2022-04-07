@@ -1,8 +1,8 @@
-import api from "./api.config";
+import { rewardApi } from "./api.config";
 
 const createReward = async (reward) => {
   try {
-    const newReward = await api.post("/rewards", reward);
+    const newReward = await rewardApi.post("/rewards", reward);
     return newReward;
   } catch (err) {
     throw err;
@@ -11,7 +11,7 @@ const createReward = async (reward) => {
 
 const getRewards = async () => {
   try {
-    const rewards = await api.get("/rewards");
+    const rewards = await rewardApi.get("/rewards");
     return rewards.data;
   } catch (err) {
     throw err;
@@ -20,7 +20,7 @@ const getRewards = async () => {
 
 const getCategories = async () => {
   try {
-    const categories = await api.get("/rewards/categories");
+    const categories = await rewardApi.get("/rewards/categories");
     return categories.data;
   } catch (err) {
     throw err;
@@ -30,7 +30,7 @@ const getCategories = async () => {
 const updateReward = async ({ id, reward }) => {
   console.log(reward);
   try {
-    const rewardUpdated = await api.patch(`/rewards/${id}`, reward);
+    const rewardUpdated = await rewardApi.patch(`/rewards/${id}`, reward);
     return rewardUpdated;
   } catch (err) {
     throw err;
@@ -39,7 +39,7 @@ const updateReward = async ({ id, reward }) => {
 
 const deleteReward = async (id) => {
   try {
-    const result = await api.delete(`/rewards/${id}`);
+    const result = await rewardApi.delete(`/rewards/${id}`);
     return result;
   } catch (err) {
     throw err;

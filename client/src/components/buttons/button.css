@@ -1,0 +1,17 @@
+.backButtonWrapper {
+  border: none;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  width: fit-content;
+  transition: all 0.1s ease-out;
+}
+
+.backButtonWrapper div:hover {
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
+
+.backButtonWrapper:hover {
+  transform: scale(1.05);
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Input, Button } from "reactstrap";
 
@@ -39,10 +39,6 @@ function CreateRewardForm(props) {
     } else {
       return;
     }
-  };
-
-  const handleOnCategoryChange = (categories) => {
-    setReward((old) => ({ ...old, categories }));
   };
 
   return (
