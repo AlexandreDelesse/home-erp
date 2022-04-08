@@ -12,6 +12,7 @@ exports.create = async (req, res) => {
     const result = await Workout.create(newWorkout, {
       include: [{ model: Activity, include: [Serie] }],
     });
+
     res.status(201).send(result);
   } catch (err) {
     console.log(err);

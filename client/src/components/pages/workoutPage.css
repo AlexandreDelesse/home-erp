@@ -1,5 +1,11 @@
 .workoutPageContent {
-    margin-top: 20px;
+  margin-top: 20px;
+}
+
+.workoutAddButton {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
 }
 
 .workoutOverviewList {
@@ -15,6 +21,9 @@
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .workoutDate {
@@ -22,9 +31,6 @@
   text-transform: capitalize;
   font-size: larger;
   font-weight: 500;
-}
-
-.activityWrapper {
 }
 
 .activityTitle {

@@ -1,19 +1,23 @@
 import React from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { IoIosFitness, IoIosStats } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
+import { BiPlus } from "react-icons/bi";
 
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Spinner } from "reactstrap";
-import { getWorkouts } from "../../services/workout.service";
+import {
+  createEmptyWorkout,
+  deleteWorkout,
+  getWorkouts,
+} from "../../services/workout.service";
 import DateFormatter from "../formatters/DateFormatter";
 import BackButton from "../buttons/BackButton";
 
 import "./workoutPage.css";
+import FloatingButton from "../buttons/FloatingButton";
 
 function WorkoutPage(props) {
-  // Access the client
-  //   const queryClient = useQueryClient();
-
   // Queries
   const workoutQuery = useQuery("workouts", getWorkouts);
 
@@ -46,9 +50,35 @@ export default WorkoutPage;
 
 const WorkoutList = ({ workouts }) => {
   const navigate = useNavigate();
+  // Access the client
+  const queryClient = useQueryClient();
 
   const onWorkoutClick = (workout) => {
     navigate(`${workout.id}`, { state: workout });
+  };
+
+  const workoutCreateMutation = useMutation(createEmptyWorkout, {
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries("workouts");
+      navigate(`${data.id}`, { state: data });
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const workoutDeleteMutation = useMutation(deleteWorkout, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries("workouts");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const handleOnAddWorkoutClick = async () => {
+    workoutCreateMutation.mutate();
   };
 
   return (
@@ -58,16 +88,30 @@ const WorkoutList = ({ workouts }) => {
           key={workout.id}
           workout={workout}
           onClick={onWorkoutClick}
+          onDelete={workoutDeleteMutation.mutate}
         />
       ))}
+      <FloatingButton
+        loading={workoutCreateMutation.isLoading}
+        onClick={handleOnAddWorkoutClick}
+        className="workoutAddButton"
+      >
+        <BiPlus size="30px" />
+      </FloatingButton>
     </div>
   );
 };
 
-const WorkoutOverview = ({ workout, onClick }) => {
+const WorkoutOverview = ({ workout, onClick, onDelete }) => {
+  const handleOnDeleteIcon = (e) => {
+    e.stopPropagation();
+    onDelete(workout.id);
+  };
+
   return (
     <div className="workoutOverview" onClick={() => onClick(workout)}>
       <DateFormatter ISODate={workout.createdAt} />
+      <IoClose size='20px' onClick={handleOnDeleteIcon} />
     </div>
   );
 };
@@ -75,6 +119,7 @@ const WorkoutOverview = ({ workout, onClick }) => {
 const WorkoutDetail = () => {
   const location = useLocation();
   const workout = location.state;
+  console.log(workout);
 
   return (
     <div>
@@ -82,9 +127,13 @@ const WorkoutDetail = () => {
         <DateFormatter ISODate={workout.date} />
       </div>
       <div>
-        {workout.activities.map((activity) => (
-          <Activity key={activity.id} activity={activity} />
-        ))}
+        {workout.activities ? (
+          workout.activities.map((activity) => (
+            <Activity key={activity.id} activity={activity} />
+          ))
+        ) : (
+          <div>No activities</div>
+        )}
       </div>
     </div>
   );
