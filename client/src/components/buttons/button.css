@@ -37,3 +37,19 @@
   transform: scale(1.1);
   cursor: pointer;
 }
+
+/* Classic button */
+
+.classicButtonWrapper {
+  border: 1px solid Black;
+  background-color: white;
+  color: black;
+  padding: 5px 10px;
+  width: fit-content;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.classicButtonWrapper:hover {
+  transform: scale(1.05);
+}
