@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
-import { Input } from 'reactstrap'
-import ClassicButton from '../buttons/ClassicButton'
+import React, { useState } from "react";
+import { Input } from "reactstrap";
+import ClassicButton from "../buttons/ClassicButton";
 
 export default function CreateSerieForm({ onAdd }) {
-  const [serie, setSerie] = useState({ reps: undefined, weight: undefined })
+  const [serie, setSerie] = useState({ reps: 0, weight: 0 });
 
   const handleOnInputChange = (e) => {
-    const { name, value } = e.target
-    setSerie((old) => ({ ...serie, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setSerie((old) => ({ ...old, [name]: value }));
+  };
 
   const handleOnAdd = () => {
-    if (!serie.reps) return
-    onAdd(serie)
-    setSerie({ reps: 0, weight: 0 })
-  }
+    if (!serie.reps) return;
+    onAdd(serie);
+    setSerie({ reps: 0, weight: 0 });
+  };
 
   return (
     <>
@@ -39,5 +39,5 @@ export default function CreateSerieForm({ onAdd }) {
         Add
       </ClassicButton>
     </>
-  )
+  );
 }

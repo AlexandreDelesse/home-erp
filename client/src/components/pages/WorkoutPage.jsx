@@ -1,35 +1,41 @@
-import React, { useState } from 'react'
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
-import { IoIosFitness, IoIosStats } from 'react-icons/io'
-import { IoClose } from 'react-icons/io5'
-import { BiPlus } from 'react-icons/bi'
-
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { Modal, Spinner } from 'reactstrap'
+import React, { useState } from "react";
 import {
-  createEmptyWorkout,
-  deleteWorkout,
-  getWorkouts,
-} from '../../services/workout.service'
-import DateFormatter from '../formatters/DateFormatter'
-import BackButton from '../buttons/BackButton'
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  useParams,
+} from "react-router-dom";
+import { IoIosFitness, IoIosStats } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
+import { BiPlus } from "react-icons/bi";
 
-import './workoutPage.css'
-import FloatingButton from '../buttons/FloatingButton'
-import ClassicButton from '../buttons/ClassicButton'
-import { createEmptyActivity } from '../../services/activity.service'
-import CreateActivityForm from '../forms/CreateActivityForm'
+import { Spinner } from "reactstrap";
+
+import DateFormatter from "../formatters/DateFormatter";
+import BackButton from "../buttons/BackButton";
+
+import "./workoutPage.css";
+import FloatingButton from "../buttons/FloatingButton";
+import ClassicButton from "../buttons/ClassicButton";
+import CreateActivityForm from "../forms/CreateActivityForm";
+import useGetWorkouts from "../../hooks/query/useGetWorkouts";
+import useAddWorkout from "../../hooks/mutations/useAddWorkout";
+import useDeleteWorkout from "../../hooks/mutations/useDeleteWorkout";
 
 function WorkoutPage(props) {
   // Queries
-  const workoutQuery = useQuery('workouts', getWorkouts)
+  const workoutQuery = useGetWorkouts();
 
   if (workoutQuery.isLoading) {
-    return <Spinner />
+    console.log("loading");
+    return <Spinner />;
   }
   if (workoutQuery.isError) {
-    return <div>{workoutQuery.error.message} </div>
+    console.log("error");
+    return <div>{workoutQuery.error.message} </div>;
   }
+  console.log("success");
 
   return (
     <div>
@@ -45,45 +51,28 @@ function WorkoutPage(props) {
         </Routes>
       </div>
     </div>
-  )
+  );
 }
 
-WorkoutPage.propTypes = {}
+WorkoutPage.propTypes = {};
 
-export default WorkoutPage
+export default WorkoutPage;
+
+// ----- List -----
 
 const WorkoutList = ({ workouts }) => {
-  const navigate = useNavigate()
-  // Access the client
-  const queryClient = useQueryClient()
+  const navigate = useNavigate();
 
   const onWorkoutClick = (workout) => {
-    navigate(`${workout.id}`, { state: workout })
-  }
+    navigate(`${workout.id}`, { state: workout });
+  };
 
-  const workoutCreateMutation = useMutation(createEmptyWorkout, {
-    onSuccess: (data) => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries('workouts')
-      navigate(`${data.id}`, { state: data })
-    },
-    onError: (err) => {
-      console.log(err)
-    },
-  })
-
-  const workoutDeleteMutation = useMutation(deleteWorkout, {
-    onSuccess: (data) => {
-      queryClient.invalidateQueries('workouts')
-    },
-    onError: (err) => {
-      console.log(err)
-    },
-  })
+  const workoutCreateMutation = useAddWorkout();
+  const workoutDeleteMutation = useDeleteWorkout();
 
   const handleOnAddWorkoutClick = async () => {
-    workoutCreateMutation.mutate()
-  }
+    workoutCreateMutation.mutate();
+  };
 
   return (
     <div className="workoutOverviewList">
@@ -103,34 +92,49 @@ const WorkoutList = ({ workouts }) => {
         <BiPlus size="30px" />
       </FloatingButton>
     </div>
-  )
-}
+  );
+};
+
+// ----- Overview -----
 
 const WorkoutOverview = ({ workout, onClick, onDelete }) => {
   const handleOnDeleteIcon = (e) => {
-    e.stopPropagation()
-    onDelete(workout.id)
-  }
+    e.stopPropagation();
+    onDelete(workout.id);
+  };
 
   return (
     <div className="workoutOverview" onClick={() => onClick(workout)}>
       <DateFormatter ISODate={workout.createdAt} />
       <IoClose size="20px" onClick={handleOnDeleteIcon} />
     </div>
-  )
-}
+  );
+};
+
+// ----- Detail -----
 
 const WorkoutDetail = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
-  const workout = location.state
-  const queryClient = useQueryClient()
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-  const onAddActivityClick = () => {
-    navigate('addActivity', { state: workout })
+  const workouts = useGetWorkouts();
+
+  console.log(workouts);
+  if (workouts.isLoading) {
+    console.log("loading");
+    return <Spinner />;
+  }
+  if (workouts.isError) {
+    console.log("error");
+    return <div>{workouts.error.message} </div>;
   }
 
-  console.log(workout)
+  if (workouts.isFetching) {
+    return <Spinner />;
+  }
+
+  console.log("success");
+  const workout = workouts.data.find((el) => el.id.toString() === id);
 
   return (
     <div>
@@ -138,7 +142,9 @@ const WorkoutDetail = () => {
         <DateFormatter ISODate={workout.date} />
       </div>
 
-      <ClassicButton onClick={onAddActivityClick}>
+      <ClassicButton
+        onClick={() => navigate("addActivity", { state: workout })}
+      >
         Activité <BiPlus size="17px" />
       </ClassicButton>
       <div>
@@ -151,8 +157,10 @@ const WorkoutDetail = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
+
+// ----- Activity -----
 
 const Activity = ({ activity }) => {
   return (
@@ -164,8 +172,10 @@ const Activity = ({ activity }) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
+
+// ----- Serie -----
 
 const Serie = ({ serie }) => {
   return (
@@ -177,5 +187,5 @@ const Serie = ({ serie }) => {
         <IoIosStats /> {serie.reps}
       </div>
     </div>
-  )
-}
+  );
+};
