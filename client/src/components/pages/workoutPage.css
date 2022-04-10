@@ -34,12 +34,26 @@
 }
 
 .activityTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid rgb(167, 167, 167);
   padding-bottom: 5px;
   margin-bottom: 15px;
   margin-top: 30px;
   text-transform: capitalize;
   font-size: large;
+}
+
+.buttonBarIcon {
+  cursor: pointer;
+  margin: 0 1px;
+  margin-right: 4px;
+  transition: all 0.1s ease-out;
+}
+
+.buttonBarIcon:hover {
+  transform: scale(1.15);
 }
 
 .serieList {

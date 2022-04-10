@@ -28,7 +28,6 @@ const getCategories = async () => {
 };
 
 const updateReward = async ({ id, reward }) => {
-  console.log(reward);
   try {
     const rewardUpdated = await rewardApi.patch(`/rewards/${id}`, reward);
     return rewardUpdated;

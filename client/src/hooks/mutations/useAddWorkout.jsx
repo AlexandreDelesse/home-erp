@@ -9,6 +9,7 @@ export default function useAddWorkout() {
   const mutation = useMutation(createEmptyWorkout, {
     onSuccess: (data) => {
       // Invalidate and refetch
+      queryClient.invalidateQueries("workouts");
       navigate(`${data.id}`);
     },
     onError: (err) => {

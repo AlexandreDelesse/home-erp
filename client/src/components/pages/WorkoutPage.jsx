@@ -9,6 +9,8 @@ import {
 import { IoIosFitness, IoIosStats } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { BiPlus } from "react-icons/bi";
+import { MdEdit } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
 
 import { Spinner } from "reactstrap";
 
@@ -28,14 +30,11 @@ function WorkoutPage(props) {
   const workoutQuery = useGetWorkouts();
 
   if (workoutQuery.isLoading) {
-    console.log("loading");
     return <Spinner />;
   }
   if (workoutQuery.isError) {
-    console.log("error");
     return <div>{workoutQuery.error.message} </div>;
   }
-  console.log("success");
 
   return (
     <div>
@@ -119,17 +118,15 @@ const WorkoutDetail = () => {
 
   const workouts = useGetWorkouts();
 
-  console.log(workouts);
   if (workouts.isLoading) {
-    console.log("loading");
     return <Spinner />;
   }
+
   if (workouts.isError) {
-    console.log("error");
     return <div>{workouts.error.message} </div>;
   }
 
-  if (workouts.isFetching) {
+  if (workouts.isSuccess && workouts.isFetching) {
     return <Spinner />;
   }
 
@@ -165,12 +162,25 @@ const WorkoutDetail = () => {
 const Activity = ({ activity }) => {
   return (
     <div className="activityWrapper">
-      <div className="activityTitle">{activity.exercice.name}</div>
+      <div className="activityTitle">
+        {activity.exercice.name}
+        <ButtonBar onAdd={() => {}} onDelete={() => {}} onEdit={() => {}} />
+      </div>
       <div className="serieList">
         {activity.series.map((serie) => (
           <Serie key={serie.id} serie={serie} />
         ))}
       </div>
+    </div>
+  );
+};
+
+const ButtonBar = ({ onEdit, onDelete, onAdd }) => {
+  return (
+    <div className="activityButtonBar">
+      <FaTrashAlt className="buttonBarIcon" onClick={onDelete} size="14px" />
+      <MdEdit className="buttonBarIcon" onClick={onEdit} size="18px" />
+      <BiPlus className="buttonBarIcon" onClick={onAdd} size="24px" />
     </div>
   );
 };

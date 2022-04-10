@@ -1,17 +1,15 @@
-import { workoutApi } from './api.config'
+import { workoutApi } from "./api.config";
 
 const createEmptyActivity = async ({ workoutId, activity }) => {
-  console.log('workoutId', workoutId)
-  console.log('activity', activity)
   try {
     const newWorkout = await workoutApi.post(
       `/workouts/${workoutId}/activity`,
-      activity,
-    )
-    return newWorkout.data
+      activity
+    );
+    return newWorkout.data;
   } catch (err) {
-    throw err
+    throw err;
   }
-}
+};
 
-export { createEmptyActivity }
+export { createEmptyActivity };

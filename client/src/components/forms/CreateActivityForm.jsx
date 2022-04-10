@@ -14,6 +14,7 @@ export default function CreateActivityForm() {
   const location = useLocation();
 
   const workout = location.state;
+  const exerciceIds = workout.activities.map((activity) => activity.exerciceId);
 
   const [activity, setActivity] = useState({
     exerciceId: undefined,
@@ -56,11 +57,13 @@ export default function CreateActivityForm() {
         className="m-2"
       >
         <option value={null}>Select an exercice</option>
-        {exercicesQuery.data.map((exercice) => (
-          <option key={exercice.id} value={exercice.id}>
-            {exercice.name}
-          </option>
-        ))}
+        {exercicesQuery.data
+          .filter((exercice) => !exerciceIds.includes(exercice.id))
+          .map((exercice) => (
+            <option key={exercice.id} value={exercice.id}>
+              {exercice.name}
+            </option>
+          ))}
       </Input>
       <Input
         className="m-2"
