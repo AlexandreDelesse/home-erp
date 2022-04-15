@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Input, Button, Spinner } from "reactstrap";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Input, Spinner } from "reactstrap";
+import { useQuery } from "react-query";
 import { getAllExercices } from "../../services/exercice.service";
 import ClassicButton from "../buttons/ClassicButton";
-import { useLocation, useNavigate } from "react-router-dom";
-import { createEmptyActivity } from "../../services/activity.service";
+import { useLocation } from "react-router-dom";
 import CreateSerieForm from "./CreateSerieForm";
 import useCreateActivity from "../../hooks/mutations/activity/useCreateActivity";
 
@@ -69,7 +68,7 @@ export default function CreateActivityForm() {
         className="m-2"
         type="checkbox"
         checked={withSeries}
-        onClick={toggleWithSeries}
+        onChange={toggleWithSeries}
       />{" "}
       With series
       {withSeries && (

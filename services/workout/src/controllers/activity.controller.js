@@ -39,3 +39,20 @@ exports.findAll = async (req, res) => {
     res.status(500).send({ message: "Failed to get all activities", err });
   }
 };
+
+exports.deleteById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Activity.destroy({
+      where: { id },
+      truncate: false,
+    });
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).send({
+      message: "Failed to delete Activity with id : " + id,
+      err,
+    });
+  }
+};

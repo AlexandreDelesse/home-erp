@@ -12,4 +12,13 @@ const createEmptyActivity = async ({ workoutId, activity }) => {
   }
 };
 
-export { createEmptyActivity };
+const deleteActivity = async (activityId) => {
+  try {
+    const query = await workoutApi.delete(`/activities/${activityId}`);
+    return query;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export { createEmptyActivity, deleteActivity };

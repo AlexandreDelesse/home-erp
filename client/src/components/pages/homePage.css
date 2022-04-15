@@ -2,5 +2,5 @@
   display: grid;
   justify-content: center;
   grid-template-columns: 158px 158px;
-  gap: 8px;
+  gap: 16px;
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input } from "reactstrap";
 import ClassicButton from "../buttons/ClassicButton";
 
-export default function CreateSerieForm({ onAdd }) {
+export default function CreateSerieForm({ onAdd, className }) {
   const [serie, setSerie] = useState({ reps: 0, weight: 0 });
 
   const handleOnInputChange = (e) => {

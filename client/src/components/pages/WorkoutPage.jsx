@@ -1,16 +1,8 @@
-import React, { useState } from "react";
-import {
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-  useParams,
-} from "react-router-dom";
+import React, { useState, useReducer, useEffect } from "react";
+import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import { IoIosFitness, IoIosStats } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { BiPlus } from "react-icons/bi";
-import { MdEdit } from "react-icons/md";
-import { FaTrashAlt } from "react-icons/fa";
 
 import { Spinner } from "reactstrap";
 
@@ -24,6 +16,9 @@ import CreateActivityForm from "../forms/CreateActivityForm";
 import useGetWorkouts from "../../hooks/query/useGetWorkouts";
 import useAddWorkout from "../../hooks/mutations/useAddWorkout";
 import useDeleteWorkout from "../../hooks/mutations/useDeleteWorkout";
+import ButtonBar from "../buttons/ButtonBar";
+import useDeleteActivity from "../../hooks/mutations/activity/useDeleteActivity";
+import CreateSerieForm from "../forms/CreateSerieForm";
 
 function WorkoutPage(props) {
   // Queries
@@ -130,16 +125,16 @@ const WorkoutDetail = () => {
     return <Spinner />;
   }
 
-  console.log("success");
   const workout = workouts.data.find((el) => el.id.toString() === id);
 
-  return (
+  return workout ? (
     <div>
       <div className="workoutDate">
         <DateFormatter ISODate={workout.date} />
       </div>
 
       <ClassicButton
+        className="mt-4"
         onClick={() => navigate("addActivity", { state: workout })}
       >
         Activité <BiPlus size="17px" />
@@ -154,33 +149,69 @@ const WorkoutDetail = () => {
         )}
       </div>
     </div>
+  ) : (
+    <div>404 </div>
   );
 };
 
 // ----- Activity -----
 
 const Activity = ({ activity }) => {
+  const deleteActivity = useDeleteActivity();
+  const navigate = useNavigate();
+  const addSerie = () => {};
+
   return (
     <div className="activityWrapper">
       <div className="activityTitle">
         {activity.exercice.name}
-        <ButtonBar onAdd={() => {}} onDelete={() => {}} onEdit={() => {}} />
+        <ButtonBar
+          onAdd={() => {
+            console.log("add");
+          }}
+          onDelete={() => {
+            deleteActivity.mutate(activity.id);
+          }}
+          onEdit={() => {
+            console.log("edit");
+          }}
+        />
       </div>
       <div className="serieList">
         {activity.series.map((serie) => (
           <Serie key={serie.id} serie={serie} />
         ))}
+        <SerieForm onChange={addSerie} />
       </div>
     </div>
   );
 };
 
-const ButtonBar = ({ onEdit, onDelete, onAdd }) => {
+const SerieForm = ({ onChange }) => {
+  const [input, setInput] = useState({});
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInput((old) => ({ ...old, [name]: value }));
+  };
+
+  useEffect(() => {
+    onChange(input);
+  }, [input]);
+
   return (
-    <div className="activityButtonBar">
-      <FaTrashAlt className="buttonBarIcon" onClick={onDelete} size="14px" />
-      <MdEdit className="buttonBarIcon" onClick={onEdit} size="18px" />
-      <BiPlus className="buttonBarIcon" onClick={onAdd} size="24px" />
+    <div className="serieWrapper">
+      <input
+        type="number"
+        value={input.reps}
+        name="reps"
+        onChange={handleInputChange}
+      />
+      <input
+        type="number"
+        value={input.weight}
+        name="weight"
+        onChange={handleInputChange}
+      />
     </div>
   );
 };
