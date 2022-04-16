@@ -1,5 +1,6 @@
 const workout = require('../controllers/workout.controller')
 const activity = require('../controllers/activity.controller')
+const exercice = require('../controllers/exercice.controller')
 
 module.exports = (app) => {
   const router = require('express').Router()
@@ -12,15 +13,12 @@ module.exports = (app) => {
   router.patch('/workouts/:id', workout.updateById)
 
   // Exercice
-  router.get('/exercices', workout.findAllExercices)
-  router.get('/activities', activity.findAll)
-  router.post('/exercices', workout.createExercice)
-  router.post('/workouts/:id/activity', activity.createActivity)
-  //   router.get("/workouts/categories", reward.findAllCategories);
+  router.post('/exercices', exercice.create)
+  router.get('/exercices', exercice.findAll)
+  router.get('/exercices/:id', exercice.findById)
+  router.delete('/exercices/:id', exercice.deleteById)
+  router.patch('/exercices/:id', exercice.updateById)
 
-  //   router.patch("/workouts/:id", reward.update);
-
-  //   router.delete("/workouts/all", reward.deleteAll);
   router.delete('/activities/:id', activity.deleteById)
 
   app.use('/api', router)
