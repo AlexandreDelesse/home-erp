@@ -1,6 +1,7 @@
 const workout = require('../controllers/workout.controller')
 const activity = require('../controllers/activity.controller')
 const exercice = require('../controllers/exercice.controller')
+const serie = require('../controllers/serie.controller')
 
 module.exports = (app) => {
   const router = require('express').Router()
@@ -25,6 +26,13 @@ module.exports = (app) => {
   router.get('/activities/:id', activity.findById)
   router.delete('/activities/:id', activity.deleteById)
   router.patch('/activities/:id', activity.updateById)
+
+  // Serie
+  router.post('/series', serie.create)
+  router.get('/series', serie.findAll)
+  router.get('/series/:id', serie.findById)
+  router.delete('/series/:id', serie.deleteById)
+  router.patch('/series/:id', serie.updateById)
 
   app.use('/api', router)
 }
