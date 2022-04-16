@@ -12,7 +12,7 @@ module.exports = (app) => {
   router.get('/exercices', workout.findAllExercices)
   router.get('/activities', activity.findAll)
   //   router.get("/workouts/categories", reward.findAllCategories);
-  // test comment
+  
   //   router.patch("/workouts/:id", reward.update);
 
   //   router.delete("/workouts/all", reward.deleteAll);
