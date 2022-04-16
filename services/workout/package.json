@@ -1,6 +1,6 @@
 {
   "name": "recipe-book-ms",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "livre de recette - api - node Express",
   "main": "server.js",
   "scripts": {
