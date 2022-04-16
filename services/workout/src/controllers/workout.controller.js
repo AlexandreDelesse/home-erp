@@ -20,17 +20,6 @@ exports.create = async (req, res) => {
   }
 }
 
-exports.createExercice = async (req, res) => {
-  newExercice = req.body
-
-  try {
-    const result = await Exercice.create(newExercice)
-    res.status(201).send(result)
-  } catch (err) {
-    res.status(500).send({ message: 'Failed to create Exercice', err })
-  }
-}
-
 exports.updateById = async (req, res) => {
   newWorkout = req.body
   const { id } = req.params
@@ -76,17 +65,6 @@ exports.findById = async (req, res) => {
   } catch (err) {
     console.log(err)
     res.status(500).send({ message: 'Failed to get all Workouts', err })
-  }
-}
-
-exports.findAllExercices = async (req, res) => {
-  console.log('get workouts')
-  try {
-    const result = await Exercice.findAll()
-    res.status(200).send(result)
-  } catch (err) {
-    console.log(err)
-    res.status(500).send({ message: 'Failed to get all Exercices', err })
   }
 }
 
