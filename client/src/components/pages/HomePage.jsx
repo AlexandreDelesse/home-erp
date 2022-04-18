@@ -1,11 +1,11 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "./homePage.css";
-import Widget from "../cards/widget/Widget";
-import CircularProgressBar from "../progressBar/CircularProgressBar";
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import './homePage.css'
+import Widget from '../cards/widget/Widget'
+import CircularProgressBar from '../progressBar/CircularProgressBar'
 
 function HomePage() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <div className="homePageWrapper">
       <Widget onNavigate={navigate} title="workouts">
@@ -19,10 +19,13 @@ function HomePage() {
       <Widget onNavigate={navigate} title="workouts">
         D'autres données de workout a afficher
       </Widget>
+      <Widget onNavigate={navigate} title="exercices">
+        La gestion des exercices
+      </Widget>
     </div>
-  );
+  )
 }
 
-HomePage.propTypes = {};
+HomePage.propTypes = {}
 
-export default HomePage;
+export default HomePage

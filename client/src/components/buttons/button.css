@@ -4,7 +4,7 @@
   border: none;
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: whitesmoke;
   width: fit-content;
   transition: all 0.1s ease-out;
 }
