@@ -1,9 +1,10 @@
 .widgetWrapper {
-  width: 158px;
+  width: 100%;
   padding: 10px;
   max-height: 134px;
-  border-radius: 16px;
-  background-color: whitesmoke;
+  border-radius: 4px;
+  border: 1px solid #DDD;
+  background-color: white;
   transition: all 0.1s ease-out;
 }
 

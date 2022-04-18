@@ -1,6 +1,6 @@
 .homePageWrapper {
   display: grid;
   justify-content: center;
-  grid-template-columns: 158px 158px;
+  grid-template-columns: 200px 200px;
   gap: 16px;
 }
