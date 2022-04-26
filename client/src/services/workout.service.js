@@ -1,5 +1,7 @@
 import { workoutApi } from "./api.config";
 
+// ----- workouts -----
+
 const createEmptyWorkout = async () => {
   try {
     const newWorkout = await workoutApi.post("/workouts", {});
@@ -27,4 +29,22 @@ const deleteWorkout = async (workoutId) => {
   }
 };
 
-export { getWorkouts, createEmptyWorkout, deleteWorkout };
+// ----- Activities -----
+const createActivityOnWorkout = async (workoutId, activity) => {
+  try {
+    const query = await workoutApi.post(
+      `/workouts/${workoutId}/activity`,
+      activity
+    );
+    return query.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export {
+  getWorkouts,
+  createEmptyWorkout,
+  deleteWorkout,
+  createActivityOnWorkout,
+};

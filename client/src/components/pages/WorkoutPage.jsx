@@ -19,6 +19,7 @@ import useDeleteWorkout from "../../hooks/mutations/useDeleteWorkout";
 import ButtonBar from "../buttons/ButtonBar";
 import useDeleteActivity from "../../hooks/mutations/activity/useDeleteActivity";
 import CreateSerieForm from "../forms/CreateSerieForm";
+import useCreateSerie from "../../hooks/mutations/serie/useCreateSerie";
 
 function WorkoutPage(props) {
   // Queries
@@ -42,6 +43,10 @@ function WorkoutPage(props) {
           />
           <Route path=":id" element={<WorkoutDetail />} />
           <Route path=":id/addActivity" element={<CreateActivityForm />} />
+          <Route
+            path=":id/activity/:activityId/serie"
+            element={<SerieForm />}
+          />
         </Routes>
       </div>
     </div>
@@ -98,7 +103,10 @@ const WorkoutOverview = ({ workout, onClick, onDelete }) => {
   };
 
   return (
-    <div className="workoutOverview" onClick={() => onClick(workout)}>
+    <div
+      className="workoutOverview scaleOnHover"
+      onClick={() => onClick(workout)}
+    >
       <DateFormatter ISODate={workout.createdAt} />
       <IoClose size="20px" onClick={handleOnDeleteIcon} />
     </div>
@@ -161,14 +169,16 @@ const Activity = ({ activity }) => {
   const navigate = useNavigate();
   const addSerie = () => {};
 
+  const handleOnAddSerie = () => {
+    navigate(`activity/${activity.id}/serie`);
+  };
+
   return (
     <div className="activityWrapper">
       <div className="activityTitle">
         {activity.exercice.name}
         <ButtonBar
-          onAdd={() => {
-            console.log("add");
-          }}
+          onAdd={handleOnAddSerie}
           onDelete={() => {
             deleteActivity.mutate(activity.id);
           }}
@@ -181,25 +191,29 @@ const Activity = ({ activity }) => {
         {activity.series.map((serie) => (
           <Serie key={serie.id} serie={serie} />
         ))}
-        <SerieForm onChange={addSerie} />
       </div>
     </div>
   );
 };
 
-const SerieForm = ({ onChange }) => {
-  const [input, setInput] = useState({});
+const SerieForm = () => {
+  const { activityId } = useParams();
+  const [input, setInput] = useState({ activityId, reps: 0, weight: 0 });
+
+  const serieMutation = useCreateSerie();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInput((old) => ({ ...old, [name]: value }));
   };
 
-  useEffect(() => {
-    onChange(input);
-  }, [input]);
+  const handleOnAddClick = () => {
+    console.log(input);
+    serieMutation.mutate(input);
+  };
 
   return (
-    <div className="serieWrapper">
+    <div>
       <input
         type="number"
         value={input.reps}
@@ -212,6 +226,12 @@ const SerieForm = ({ onChange }) => {
         name="weight"
         onChange={handleInputChange}
       />
+      <ClassicButton
+        onClick={handleOnAddClick}
+        loading={serieMutation.isLoading}
+      >
+        Ajouter
+      </ClassicButton>
     </div>
   );
 };

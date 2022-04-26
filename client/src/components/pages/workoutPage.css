@@ -10,17 +10,17 @@
 
 .workoutOverviewList {
   display: grid;
-  grid-template-rows: auto;
-  align-items: center;
+  grid-template-columns: repeat(auto-fill, 250px);
+  justify-content: center;
   gap: 10px;
 }
 
 .workoutOverview {
-  background-color: whitesmoke;
+  background-color: white;
   width: 100%;
-  border-radius: 5px;
   padding: 10px;
   cursor: pointer;
+  border: 1px solid gray;
   display: flex;
   justify-content: space-between;
   align-items: center;
