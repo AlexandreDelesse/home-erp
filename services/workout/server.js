@@ -35,6 +35,7 @@ app.get("/", (req, res) => {
 });
 
 require("./src/routes/workout.route")(app);
+require("./src/routes/user.route")(app);
 
 const port = process.env.PORT || 5002;
 

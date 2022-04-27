@@ -1,8 +1,9 @@
 function applyExtraSetup(sequelize) {
-  const { workout, activity, serie, exercice } = sequelize.models;
-  console.log(exercice, workout);
+  const { workout, activity, serie, exercice, user } = sequelize.models;
 
   workout.hasMany(activity);
+  workout.belongsTo(user);
+  user.hasMany(workout);
 
   activity.hasMany(serie);
 

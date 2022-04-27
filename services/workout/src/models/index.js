@@ -19,6 +19,7 @@ db.workout = require("./workout.model")(sequelize, Sequelize);
 db.activity = require("./activity.model")(sequelize, Sequelize);
 db.exercice = require("./exercice.model")(sequelize, Sequelize);
 db.serie = require("./serie.model")(sequelize, Sequelize);
+db.user = require("./user.model")(sequelize, Sequelize);
 
 applyExtraSetup(sequelize)
 

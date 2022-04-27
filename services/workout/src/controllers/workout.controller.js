@@ -4,6 +4,7 @@ const Workout = db.workout;
 const Activity = db.activity;
 const Exercice = db.exercice;
 const Serie = db.serie;
+const User = db.user;
 
 exports.create = async (req, res) => {
   newWorkout = req.body;
