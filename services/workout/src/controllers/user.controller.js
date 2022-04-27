@@ -12,6 +12,15 @@ exports.create = async (req, res) => {
   }
 };
 
+exports.findAll = async (req, res) => {
+  try {
+    const users = await User.findAll({});
+    res.status(200).send(users);
+  } catch (err) {
+    res.status(500).send({ message: "Failed to get all users", err });
+  }
+};
+
 exports.findByPk = async (req, res) => {
   const { id } = req.params;
 
