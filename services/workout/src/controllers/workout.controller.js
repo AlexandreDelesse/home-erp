@@ -54,7 +54,10 @@ exports.updateById = async (req, res) => {
 };
 
 exports.findAll = async (req, res) => {
-  console.log("get workouts");
+  const { type, userId } = req.query;
+
+  const whereStatement = type ? { type, userId } : { userId }; // get all is there is no type
+
   try {
     const result = await Workout.findAll({
       include: [
@@ -64,6 +67,7 @@ exports.findAll = async (req, res) => {
         },
       ],
       order: [[Activity, "createdAt", "ASC"]],
+      where: whereStatement,
     });
     res.status(200).send(result);
   } catch (err) {

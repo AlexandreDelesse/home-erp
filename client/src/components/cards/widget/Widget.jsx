@@ -1,21 +1,15 @@
-import React, { useState } from "react";
-import { Collapse } from "reactstrap";
+import React from "react";
+import { Card, CardBody, CardTitle } from "reactstrap";
 import "./widget.css";
 
 function Widget({ children, title, onNavigate }) {
-  const [collapsed, setCollapsed] = useState(true);
-
-  const onCollapse = (e) => {
-    e.stopPropagation();
-    setCollapsed(!collapsed);
-  };
   return (
-    <div onClick={() => onNavigate(title)} className="widgetWrapper">
-      <WidgetTopBar onCollapse={onCollapse} title={title} />
-      <Collapse isOpen={collapsed}>
-        <div className="widgetContent">{children}</div>
-      </Collapse>
-    </div>
+    <Card onClick={() => onNavigate(`/${title}`)}>
+      <CardBody>
+        <CardTitle>{title}</CardTitle>
+        {children}
+      </CardBody>
+    </Card>
   );
 }
 

@@ -1,0 +1,12 @@
+.trainingList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  gap: 16px;
+  justify-content: center;
+}
+
+.trainingCard {
+  padding: 8px;
+  color: white;
+  text-align: center;
+}

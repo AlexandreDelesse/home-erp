@@ -1,17 +1,18 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import './homePage.css'
-import Widget from '../cards/widget/Widget'
-import CircularProgressBar from '../progressBar/CircularProgressBar'
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import "./homePage.css";
+import Widget from "../cards/widget/Widget";
+import { getUserSession } from "../../services/user.service";
+import CircularProgressBar from "../progressBar/circularProgressBar/CircularProgressBar";
 
 function HomePage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const user = getUserSession();
+
   return (
     <div className="homePageWrapper">
       <Widget onNavigate={navigate} title="workouts">
-        <div style={{ width: 80, height: 80 }}>
-          <CircularProgressBar value={12} />
-        </div>
+        <CircularProgressBar value={80} />
       </Widget>
       <Widget onNavigate={navigate} title="rewards">
         Les données de reward a afficher
@@ -22,10 +23,13 @@ function HomePage() {
       <Widget onNavigate={navigate} title="exercices">
         La gestion des exercices
       </Widget>
+      <Widget onNavigate={navigate} title="trainings">
+        Trainings
+      </Widget>
     </div>
-  )
+  );
 }
 
-HomePage.propTypes = {}
+HomePage.propTypes = {};
 
-export default HomePage
+export default HomePage;

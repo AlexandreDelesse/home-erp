@@ -20,35 +20,31 @@ import ButtonBar from "../buttons/ButtonBar";
 import useDeleteActivity from "../../hooks/mutations/activity/useDeleteActivity";
 import CreateSerieForm from "../forms/CreateSerieForm";
 import useCreateSerie from "../../hooks/mutations/serie/useCreateSerie";
+import AsyncComponent from "../tools/AsyncComponent";
 
 function WorkoutPage(props) {
   // Queries
   const workoutQuery = useGetWorkouts();
 
-  if (workoutQuery.isLoading) {
-    return <Spinner />;
-  }
-  if (workoutQuery.isError) {
-    return <div>{workoutQuery.error.message} </div>;
-  }
-
   return (
     <div>
-      <BackButton />
-      <div className="workoutPageContent">
-        <Routes>
-          <Route
-            path="/"
-            element={<WorkoutList workouts={workoutQuery.data} />}
-          />
-          <Route path=":id" element={<WorkoutDetail />} />
-          <Route path=":id/addActivity" element={<CreateActivityForm />} />
-          <Route
-            path=":id/activity/:activityId/serie"
-            element={<SerieForm />}
-          />
-        </Routes>
-      </div>
+      <AsyncComponent query={workoutQuery}>
+        <BackButton />
+        <div className="workoutPageContent">
+          <Routes>
+            <Route
+              path="/"
+              element={<WorkoutList workouts={workoutQuery.data} />}
+            />
+            <Route path=":id" element={<WorkoutDetail />} />
+            <Route path=":id/addActivity" element={<CreateActivityForm />} />
+            <Route
+              path=":id/activity/:activityId/serie"
+              element={<SerieForm />}
+            />
+          </Routes>
+        </div>
+      </AsyncComponent>
     </div>
   );
 }
@@ -183,7 +179,6 @@ const Activity = ({ activity }) => {
             deleteActivity.mutate(activity.id);
           }}
           onEdit={() => {
-            console.log("edit");
           }}
         />
       </div>
@@ -208,7 +203,6 @@ const SerieForm = () => {
   };
 
   const handleOnAddClick = () => {
-    console.log(input);
     serieMutation.mutate(input);
   };
 

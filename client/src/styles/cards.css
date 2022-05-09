@@ -1,0 +1,6 @@
+@import "colors.css";
+
+.basicCardWrapper {
+  background-color: var(--color3);
+  border-radius: 5px;
+}

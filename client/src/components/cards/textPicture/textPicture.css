@@ -1,0 +1,12 @@
+.textPictureWrapper {
+  color: white;
+  padding: 0 8px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  width: 100%;
+}
+
+.textPictureWrapper div {
+  margin-right: 8px;
+}

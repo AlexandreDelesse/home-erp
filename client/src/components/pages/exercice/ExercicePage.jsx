@@ -77,12 +77,10 @@ const ExerciceDetail = () => {
   const navigate = useNavigate();
 
   const handleOnDeleteExercice = async () => {
-    console.log(exercice.data.id);
     try {
       await deleteExercice.mutateAsync(exercice.data.id);
       navigate(-1);
     } catch (err) {
-      console.log(err);
     }
   };
 

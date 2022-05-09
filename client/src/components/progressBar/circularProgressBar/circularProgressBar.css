@@ -1,0 +1,65 @@
+/* .box {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+} */
+
+.box {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.box svg {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.box svg circle {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke-width: 10;
+  stroke: #000;
+  transform: translate(50%, 50%);
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+  stroke-linecap: round;
+}
+
+.box svg circle:nth-child(1) {
+  stroke-dashoffset: 0;
+  stroke: #ddd;
+}
+
+.box svg circle:nth-child(2) {
+  stroke: #39e4ab;
+}
+
+.box .number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: #31b387;
+}
+
+.box .number h2 {
+  font-size: 48px;
+}
+
+.box .number h2 span {
+  font-size: 24px;
+}
