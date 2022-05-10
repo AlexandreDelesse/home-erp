@@ -1,3 +1,5 @@
+@import "../../../styles/colors.css";
+
 .trainingList {
   display: grid;
   grid-template-columns: repeat(auto-fill, 250px);
@@ -9,4 +11,37 @@
   padding: 8px;
   color: white;
   text-align: center;
+}
+
+.trainingName {
+  padding: 16px;
+  text-align: center;
+  font-size: 32px;
+}
+
+.activityList {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, fit-content);
+  width: 100%;
+  gap: 16px;
+}
+
+.activityWrapper {
+  background-color: var(--color3);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 0 16px;
+}
+
+.activityTitle {
+  font-size: 32px;
+  color: var(--color1);
+}
+
+.serieWrapper {
+  color: #ccc;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 24px;
+  gap: 16px ;
 }

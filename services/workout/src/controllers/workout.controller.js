@@ -56,7 +56,7 @@ exports.updateById = async (req, res) => {
 exports.findAll = async (req, res) => {
   const { type, userId } = req.query;
 
-  const whereStatement = type ? { type, userId } : { userId }; // get all is there is no type
+  const whereStatement = type ? { type, userId } : { userId }; // get all if there is no type
 
   try {
     const result = await Workout.findAll({
