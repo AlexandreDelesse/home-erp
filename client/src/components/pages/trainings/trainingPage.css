@@ -26,6 +26,21 @@
   gap: 16px;
 }
 
+.bottomBannerWrapper {
+  width: 100%;
+  background-color: var(--color1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 16px;
+  position: absolute;
+  bottom: 0;
+}
+
+.bottomBannerWrapper div {
+  display: flex;
+  justify-content: center;
+}
+
 .activityWrapper {
   background-color: var(--color3);
   border-radius: 16px;
@@ -43,5 +58,36 @@
   display: flex;
   justify-content: flex-start;
   font-size: 24px;
-  gap: 16px ;
+  gap: 16px;
+}
+
+.formNumberWrapper {
+  width: fit-content;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+}
+
+.formNumberButton {
+  background-color: var(--color2);
+  padding: 8px;
+  color: white;
+  text-transform: capitalize;
+}
+.formNumberValue {
+  background-color: var(--color1);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.formNumberButton.top {
+  border-radius: 8px 8px 0 0;
+}
+
+.formNumberButton.bottom {
+  border-radius: 0 0 8px 8px;
 }
